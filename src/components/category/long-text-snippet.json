@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_category_long_text_snippets",
+  "info": {
+    "displayName": "Long Text Snippet",
+    "icon": "pencil",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "longText": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

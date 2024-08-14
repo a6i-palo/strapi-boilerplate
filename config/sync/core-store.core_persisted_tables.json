@@ -1,0 +1,58 @@
+{
+  "key": "core_persisted_tables",
+  "value": [
+    {
+      "name": "strapi_audit_logs"
+    },
+    {
+      "name": "strapi_audit_logs_user_links"
+    },
+    {
+      "name": "strapi_workflows"
+    },
+    {
+      "name": "strapi_workflows_stages"
+    },
+    {
+      "name": "strapi_workflows_stages_workflow_links"
+    },
+    {
+      "name": "strapi_workflows_stages_permissions_links"
+    },
+    {
+      "name": "up_users_strapi_stage_links",
+      "dependsOn": [
+        {
+          "name": "up_users"
+        }
+      ]
+    },
+    {
+      "name": "content_bundle_strapi_stage_links",
+      "dependsOn": [
+        {
+          "name": "content-bundle"
+        }
+      ]
+    },
+    {
+      "name": "media_snippets_strapi_stage_links",
+      "dependsOn": [
+        {
+          "name": "media_snippets"
+        }
+      ]
+    },
+    {
+      "name": "text_snippets_strapi_stage_links",
+      "dependsOn": [
+        {
+          "name": "text_snippets"
+        }
+      ]
+    }
+  ],
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

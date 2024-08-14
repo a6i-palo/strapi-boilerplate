@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "content-bundle",
+  "info": {
+    "singularName": "content-bundle",
+    "pluralName": "content-bundles",
+    "displayName": "Content Bundle",
+    "description": ""
+  },
+  "options": {
+    "reviewWorkflows": false,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "category.text-snippet",
+        "category.long-text-snippet",
+        "category.image-snippet"
+      ],
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "ticket": {
+      "type": "string",
+      "required": true
+    },
+    "appRef": {
+      "type": "string",
+      "required": true
+    },
+    "regionId": {
+      "type": "string",
+      "required": true
+    },
+    "uuid": {
+      "type": "customField",
+      "options": {
+        "uuid-format": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "key": "plugin_content_manager_configuration_components::category.text-snippet",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "shortText",
+      "defaultSortBy": "shortText",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "shortText": {
+        "edit": {
+          "label": "shortText",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "shortText",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "shortText"
+      ],
+      "edit": [
+        [
+          {
+            "name": "shortText",
+            "size": 6
+          }
+        ]
+      ]
+    },
+    "uid": "category.text-snippet",
+    "isComponent": true
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

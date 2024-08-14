@@ -1,0 +1,13 @@
+{
+  "key": "core_admin_auth",
+  "value": {
+    "providers": {
+      "autoRegister": true,
+      "defaultRole": "2",
+      "ssoLockedRoles": null
+    }
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

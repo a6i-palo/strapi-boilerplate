@@ -1,0 +1,56 @@
+{
+  "name": "Release Manager",
+  "code": "release-manager-lzatg4qs",
+  "description": "Created August 1st, 2024",
+  "permissions": [
+    {
+      "action": "plugin::content-releases.create",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.create-action",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.delete",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.delete-action",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.publish",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.update",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    }
+  ]
+}

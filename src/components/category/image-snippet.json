@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_category_image_snippets",
+  "info": {
+    "displayName": "Image Snippet",
+    "icon": "picture",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "singleImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

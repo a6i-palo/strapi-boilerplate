@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_category_text_snippets",
+  "info": {
+    "displayName": "Short Text Snippet",
+    "icon": "pencil",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "shortText": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

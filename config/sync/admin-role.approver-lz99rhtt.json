@@ -1,0 +1,35 @@
+{
+  "name": "Approver",
+  "code": "approver-lz99rhtt",
+  "description": "Created July 31st, 2024",
+  "permissions": [
+    {
+      "action": "admin::users.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.create-action",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.delete-action",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-releases.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "key": "plugin_content_manager_configuration_components::category.long-text-snippet",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "id",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "longText": {
+        "edit": {
+          "label": "longText",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "longText",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "longText"
+      ],
+      "edit": [
+        [
+          {
+            "name": "longText",
+            "size": 6
+          }
+        ]
+      ]
+    },
+    "uid": "category.long-text-snippet",
+    "isComponent": true
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}
