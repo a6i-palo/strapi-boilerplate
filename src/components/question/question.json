@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_category_questions",
+  "info": {
+    "displayName": "MCQ",
+    "icon": "layer",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "multiselect": {
+      "type": "boolean"
+    },
+    "choice": {
+      "displayName": "MCQ Question Choice",
+      "type": "component",
+      "repeatable": true,
+      "component": "question.mcq-question-choice"
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    }
+  }
+}

@@ -30,18 +30,11 @@
       "type": "string",
       "required": true
     },
-    "appRef": {
-      "type": "string",
-      "required": true
-    },
-    "regionId": {
-      "type": "string",
-      "required": true
-    },
     "uuid": {
       "type": "customField",
       "options": {
-        "uuid-format": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        "uuid-format": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "disable-regenerate": true
       },
       "customField": "plugin::strapi-advanced-uuid.uuid"
     }

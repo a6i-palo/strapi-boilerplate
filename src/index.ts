@@ -1,3 +1,14 @@
+const generatePassword = () => {
+  const length = 12,
+    charset =
+      "@#&*0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$&*0123456789abcdefghijklmnopqrstuvwxyz";
+  let password = "";
+  for (var i = 0, n = charset.length; i < length; ++i) {
+    password += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return password;
+};
+
 export default {
   /**
    * An asynchronous register function that runs before
@@ -14,35 +25,42 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  async bootstrap({ strapi }) {
+    const adminEmail = String(process.env.ADMIN_EMAIL);
+    const adminPassword = generatePassword();
+
+    // const allRoles = await strapi.db.query("admin::role").findMany();
+    // console.log(allRoles);
+
+    if (!adminEmail) return;
+
+    const superAdminRole = await strapi.db
+      .query("admin::role")
+      .findOne({ where: { code: "strapi-super-admin" } });
+
+    const superAdmin = await strapi.db
+      .query("admin::user")
+      .findOne({ where: { username: adminEmail } });
+
+    if (!superAdmin) {
+      const params = {
+        username: adminEmail,
+        email: adminEmail,
+        password: await strapi.admin.services.auth.hashPassword(adminPassword),
+        blocked: false,
+        isActive: true,
+        confirmed: true,
+        roles: [superAdminRole],
+      };
+
+      await strapi.db.query("admin::user").create({
+        data: { ...params },
+        populate: ["roles"],
+      });
+
+      console.log(
+        `First admin account created for ${adminEmail} with temporary password: ${adminPassword}. Please update the password after logging in`
+      );
+    }
+  },
 };
-
-// create user admin if it doesn't exist
-// await strapi.admin.services.role.createRolesIfNoneExist();
-// const superAdminRole = await strapi.db
-//   .query("admin::role")
-//   .findOne({ where: { code: "strapi-super-admin" } });
-
-// const superAdmin = await strapi.db
-//   .query("admin::user")
-//   .findOne({ where: { username: "admin" } });
-
-// if (!superAdmin) {
-//   const params = {
-//     username: "admin",
-//     email: "admin@dev.com",
-//     blocked: false,
-//     isActive: true,
-//     confirmed: true,
-//     password: null,
-//     roles: null,
-//   };
-//   params.password = await strapi.admin.services.auth.hashPassword(
-//     "Admin1234"
-//   );
-//   params.roles = [superAdminRole.id];
-//   await strapi.db.query("admin::user").create({
-//     data: { ...params },
-//     populate: ["roles"],
-//   });
-// }

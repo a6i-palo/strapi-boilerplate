@@ -4,6 +4,29 @@
   "description": "Created August 1st, 2024",
   "permissions": [
     {
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::content-bundle.content-bundle",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.publish",
+      "actionParameters": {},
+      "subject": "api::question-set.question-set",
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.stage.transition",
+      "actionParameters": {
+        "from": 19
+      },
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
       "action": "plugin::content-releases.create",
       "actionParameters": {},
       "subject": null,

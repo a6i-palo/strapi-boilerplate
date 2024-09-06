@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_category_nested_numeric_selection_questions",
+  "info": {
+    "displayName": "Numeric Selection Group",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "questionGroup": {
+      "type": "component",
+      "repeatable": true,
+      "component": "question.numeric-selection-question"
+    },
+    "title": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "type": {
+      "type": "string",
+      "default": "NUMERIC_SELECTION_GROUP",
+      "required": true
+    }
+  }
+}

@@ -1,13 +1,13 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::media-snippet.media-snippet",
+  "key": "plugin_content_manager_configuration_content_types::api::question-set.question-set",
   "value": {
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "elementId",
-      "defaultSortBy": "contentId",
+      "mainField": "title",
+      "defaultSortBy": "title",
       "defaultSortOrder": "ASC"
     },
     "metadatas": {
@@ -19,58 +19,44 @@
           "sortable": true
         }
       },
-      "media": {
+      "uuid": {
         "edit": {
-          "label": "media",
+          "label": "uuid",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "media",
+          "label": "uuid",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "questionSet": {
+        "edit": {
+          "label": "questionSet",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "questionSet",
           "searchable": false,
           "sortable": false
         }
       },
-      "contentId": {
+      "title": {
         "edit": {
-          "label": "contentId",
+          "label": "title",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "contentId",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "ticket": {
-        "edit": {
-          "label": "ticket",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "ticket",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "elementId": {
-        "edit": {
-          "label": "elementId",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "elementId",
+          "label": "title",
           "searchable": true,
           "sortable": true
         }
@@ -135,39 +121,34 @@
       }
     },
     "layouts": {
+      "list": [
+        "id",
+        "uuid",
+        "title",
+        "createdAt"
+      ],
       "edit": [
         [
           {
-            "name": "media",
-            "size": 6
-          },
-          {
-            "name": "contentId",
+            "name": "uuid",
             "size": 6
           }
         ],
         [
           {
-            "name": "ticket",
-            "size": 6
-          },
+            "name": "questionSet",
+            "size": 12
+          }
+        ],
+        [
           {
-            "name": "elementId",
+            "name": "title",
             "size": 6
           }
         ]
-      ],
-      "list": [
-        "id",
-        "media",
-        "contentId",
-        "createdAt"
       ]
     },
-    "uid": "api::media-snippet.media-snippet",
-    "options": {
-      "reviewWorkflows": false
-    }
+    "uid": "api::question-set.question-set"
   },
   "type": "object",
   "environment": null,

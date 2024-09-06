@@ -4,6 +4,29 @@
   "description": "Created July 31st, 2024",
   "permissions": [
     {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::content-bundle.content-bundle",
+      "properties": {
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.stage.transition",
+      "actionParameters": {
+        "from": 18
+      },
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
       "action": "admin::users.read",
       "actionParameters": {},
       "subject": null,

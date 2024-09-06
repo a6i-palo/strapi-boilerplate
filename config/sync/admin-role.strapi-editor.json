@@ -4,6 +4,57 @@
   "description": "Editors can manage and publish contents including those of other users.",
   "permissions": [
     {
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::content-bundle.content-bundle",
+      "properties": {
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::content-bundle.content-bundle",
+      "properties": {
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::content-bundle.content-bundle",
+      "properties": {
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
+      },
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.stage.transition",
+      "actionParameters": {
+        "from": 17
+      },
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
       "action": "admin::users.read",
       "actionParameters": {},
       "subject": null,

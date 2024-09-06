@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "question_sets",
+  "info": {
+    "singularName": "question-set",
+    "pluralName": "question-sets",
+    "displayName": "Question Set",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "customField",
+      "options": {
+        "uuid-format": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "disable-regenerate": true
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
+    "questionSet": {
+      "type": "dynamiczone",
+      "components": [
+        "question.question",
+        "question.numeric-selection-question",
+        "question.free-text-question",
+        "question.nested-numeric-selection-question"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

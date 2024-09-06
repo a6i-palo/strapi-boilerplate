@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_category_numeric_selection_questions",
+  "info": {
+    "displayName": "Numeric Selection",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "maxScale": {
+      "type": "integer",
+      "default": 10,
+      "required": true
+    },
+    "minScale": {
+      "type": "integer",
+      "default": 1,
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "NUMERIC",
+        "STAR_RATING"
+      ],
+      "required": true,
+      "default": "NUMERIC"
+    }
+  }
+}

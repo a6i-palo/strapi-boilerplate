@@ -8,7 +8,12 @@
       "actionParameters": {},
       "subject": "api::content-bundle.content-bundle",
       "properties": {
-        "fields": ["content", "title", "ticket", "appRef", "regionId", "uuid"]
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
       },
       "conditions": []
     },
@@ -31,7 +36,12 @@
       "actionParameters": {},
       "subject": "api::content-bundle.content-bundle",
       "properties": {
-        "fields": ["content", "title", "ticket", "appRef", "regionId", "uuid"]
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
       },
       "conditions": []
     },
@@ -40,96 +50,65 @@
       "actionParameters": {},
       "subject": "api::content-bundle.content-bundle",
       "properties": {
-        "fields": ["content", "title", "ticket", "appRef", "regionId", "uuid"]
+        "fields": [
+          "content",
+          "title",
+          "ticket",
+          "uuid"
+        ]
       },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.create",
       "actionParameters": {},
-      "subject": "api::media-snippet.media-snippet",
+      "subject": "api::question-set.question-set",
       "properties": {
-        "fields": ["media", "contentId", "ticket", "elementId"]
+        "fields": [
+          "uuid",
+          "questionSet",
+          "title"
+        ]
       },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.delete",
       "actionParameters": {},
-      "subject": "api::media-snippet.media-snippet",
+      "subject": "api::question-set.question-set",
       "properties": {},
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.publish",
       "actionParameters": {},
-      "subject": "api::media-snippet.media-snippet",
+      "subject": "api::question-set.question-set",
       "properties": {},
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.read",
       "actionParameters": {},
-      "subject": "api::media-snippet.media-snippet",
+      "subject": "api::question-set.question-set",
       "properties": {
-        "fields": ["media", "contentId", "ticket", "elementId"]
+        "fields": [
+          "uuid",
+          "questionSet",
+          "title"
+        ]
       },
       "conditions": []
     },
     {
       "action": "plugin::content-manager.explorer.update",
       "actionParameters": {},
-      "subject": "api::media-snippet.media-snippet",
+      "subject": "api::question-set.question-set",
       "properties": {
-        "fields": ["media", "contentId", "ticket", "elementId"]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.create",
-      "actionParameters": {},
-      "subject": "api::text-snippet.text-snippet",
-      "properties": {
-        "fields": ["content", "contentId", "ticket", "elementId"],
-        "locales": ["en"]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.delete",
-      "actionParameters": {},
-      "subject": "api::text-snippet.text-snippet",
-      "properties": {
-        "locales": ["en"]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.publish",
-      "actionParameters": {},
-      "subject": "api::text-snippet.text-snippet",
-      "properties": {
-        "locales": ["en"]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.read",
-      "actionParameters": {},
-      "subject": "api::text-snippet.text-snippet",
-      "properties": {
-        "fields": ["content", "contentId", "ticket", "elementId"],
-        "locales": ["en"]
-      },
-      "conditions": []
-    },
-    {
-      "action": "plugin::content-manager.explorer.update",
-      "actionParameters": {},
-      "subject": "api::text-snippet.text-snippet",
-      "properties": {
-        "fields": ["content", "contentId", "ticket", "elementId"],
-        "locales": ["en"]
+        "fields": [
+          "uuid",
+          "questionSet",
+          "title"
+        ]
       },
       "conditions": []
     },
@@ -176,6 +155,13 @@
       "conditions": []
     },
     {
+      "action": "admin::audit-logs.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
       "action": "admin::marketplace.read",
       "actionParameters": {},
       "subject": null,
@@ -191,6 +177,48 @@
     },
     {
       "action": "admin::project-settings.update",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::provider-login.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::provider-login.update",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.create",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.delete",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": []
+    },
+    {
+      "action": "admin::review-workflows.update",
       "actionParameters": {},
       "subject": null,
       "properties": {},

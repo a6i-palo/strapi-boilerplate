@@ -1,5 +1,5 @@
 {
-  "key": "plugin_content_manager_configuration_content_types::api::content-bundle.content-bundle",
+  "key": "plugin_content_manager_configuration_components::question.numeric-selection-question",
   "value": {
     "settings": {
       "bulkable": true,
@@ -15,20 +15,6 @@
         "edit": {},
         "list": {
           "label": "id",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "content": {
-        "edit": {
-          "label": "content",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "content",
           "searchable": false,
           "sortable": false
         }
@@ -47,88 +33,58 @@
           "sortable": true
         }
       },
-      "ticket": {
+      "maxScale": {
         "edit": {
-          "label": "ticket",
+          "label": "maxScale",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "ticket",
+          "label": "maxScale",
           "searchable": true,
           "sortable": true
         }
       },
-      "uuid": {
+      "minScale": {
         "edit": {
-          "label": "uuid",
+          "label": "minScale",
           "description": "",
           "placeholder": "",
           "visible": true,
           "editable": true
         },
         "list": {
-          "label": "uuid",
+          "label": "minScale",
           "searchable": true,
           "sortable": true
         }
       },
-      "createdAt": {
+      "code": {
         "edit": {
-          "label": "createdAt",
+          "label": "code",
           "description": "",
           "placeholder": "",
-          "visible": false,
+          "visible": true,
           "editable": true
         },
         "list": {
-          "label": "createdAt",
+          "label": "code",
           "searchable": true,
           "sortable": true
         }
       },
-      "updatedAt": {
+      "type": {
         "edit": {
-          "label": "updatedAt",
+          "label": "type",
           "description": "",
           "placeholder": "",
-          "visible": false,
+          "visible": true,
           "editable": true
         },
         "list": {
-          "label": "updatedAt",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "createdBy": {
-        "edit": {
-          "label": "createdBy",
-          "description": "",
-          "placeholder": "",
-          "visible": false,
-          "editable": true,
-          "mainField": "firstname"
-        },
-        "list": {
-          "label": "createdBy",
-          "searchable": true,
-          "sortable": true
-        }
-      },
-      "updatedBy": {
-        "edit": {
-          "label": "updatedBy",
-          "description": "",
-          "placeholder": "",
-          "visible": false,
-          "editable": true,
-          "mainField": "firstname"
-        },
-        "list": {
-          "label": "updatedBy",
+          "label": "type",
           "searchable": true,
           "sortable": true
         }
@@ -138,37 +94,40 @@
       "list": [
         "id",
         "title",
-        "ticket"
+        "maxScale",
+        "minScale"
       ],
       "edit": [
-        [
-          {
-            "name": "content",
-            "size": 12
-          }
-        ],
         [
           {
             "name": "title",
             "size": 6
           },
           {
-            "name": "ticket",
+            "name": "maxScale",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "minScale",
+            "size": 4
+          },
+          {
+            "name": "code",
             "size": 6
           }
         ],
         [
           {
-            "name": "uuid",
+            "name": "type",
             "size": 6
           }
         ]
       ]
     },
-    "uid": "api::content-bundle.content-bundle",
-    "options": {
-      "reviewWorkflows": true
-    }
+    "uid": "question.numeric-selection-question",
+    "isComponent": true
   },
   "type": "object",
   "environment": null,

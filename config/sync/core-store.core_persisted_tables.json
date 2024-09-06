@@ -36,18 +36,10 @@
       ]
     },
     {
-      "name": "media_snippets_strapi_stage_links",
+      "name": "question_sets_strapi_stage_links",
       "dependsOn": [
         {
-          "name": "media_snippets"
-        }
-      ]
-    },
-    {
-      "name": "text_snippets_strapi_stage_links",
-      "dependsOn": [
-        {
-          "name": "text_snippets"
+          "name": "question_sets"
         }
       ]
     }

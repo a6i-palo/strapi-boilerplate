@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_category_free_text_questions",
+  "info": {
+    "displayName": "Free Text",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "COMMENT_BOX"
+      ],
+      "default": "COMMENT_BOX",
+      "required": true
+    }
+  }
+}
