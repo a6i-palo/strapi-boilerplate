@@ -1,4 +1,4 @@
-FROM node:18 as build
+FROM node:20-alpine3.20 as build
 # RUN apt-get update && apt-get install libvips-dev -y
 
 # ARG NODE_ENV=development
@@ -10,14 +10,15 @@ FROM node:18 as build
 WORKDIR /opt/
 COPY ./package.json ./package-lock.json ./
 ENV PATH /opt/node_modules/.bin:$PATH
-RUN npm install
+RUN npm ci
 
 WORKDIR /opt/app
 COPY ./ .
 RUN npm run build
 
+RUN npm prune --omit-dev
 
-FROM node:18
+FROM node:20-alpine3.20
 # Installing libvips-dev for sharp Compatability
 # RUN apt-get update && apt-get install libvips-dev -y
 
@@ -28,6 +29,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY --from=build /opt/node_modules ./node_modules
+
 WORKDIR /opt/app
 COPY --from=build /opt/app ./
 ENV PATH /opt/node_modules/.bin:$PATH

@@ -18,6 +18,19 @@
       "conditions": []
     },
     {
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::question-set.question-set",
+      "properties": {
+        "fields": [
+          "uuid",
+          "questionSet",
+          "title"
+        ]
+      },
+      "conditions": []
+    },
+    {
       "action": "admin::review-workflows.stage.transition",
       "actionParameters": {
         "from": 18

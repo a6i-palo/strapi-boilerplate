@@ -121,16 +121,14 @@
       }
     },
     "layouts": {
-      "list": [
-        "id",
-        "uuid",
-        "title",
-        "createdAt"
-      ],
       "edit": [
         [
           {
             "name": "uuid",
+            "size": 6
+          },
+          {
+            "name": "title",
             "size": 6
           }
         ],
@@ -139,13 +137,13 @@
             "name": "questionSet",
             "size": 12
           }
-        ],
-        [
-          {
-            "name": "title",
-            "size": 6
-          }
         ]
+      ],
+      "list": [
+        "id",
+        "uuid",
+        "title",
+        "createdAt"
       ]
     },
     "uid": "api::question-set.question-set"

@@ -79,6 +79,21 @@ export interface QuestionFreeTextQuestion extends Schema.Component {
   };
 }
 
+export interface QuestionEvent extends Schema.Component {
+  collectionName: 'components_question_events';
+  info: {
+    displayName: 'Event';
+    description: '';
+  };
+  attributes: {
+    description: Attribute.String;
+    eventCode: Attribute.Enumeration<
+      ['LOGIN', 'LOGOUT', 'EMEDICAL_CARD_DOWNLOAD']
+    > &
+      Attribute.Required;
+  };
+}
+
 export interface CategoryTextSnippet extends Schema.Component {
   collectionName: 'components_category_text_snippets';
   info: {
@@ -123,6 +138,7 @@ declare module '@strapi/types' {
       'question.nested-numeric-selection-question': QuestionNestedNumericSelectionQuestion;
       'question.mcq-question-choice': QuestionMcqQuestionChoice;
       'question.free-text-question': QuestionFreeTextQuestion;
+      'question.event': QuestionEvent;
       'category.text-snippet': CategoryTextSnippet;
       'category.long-text-snippet': CategoryLongTextSnippet;
       'category.image-snippet': CategoryImageSnippet;
