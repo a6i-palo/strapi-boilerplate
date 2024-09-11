@@ -26,41 +26,43 @@ export default {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }) {
-    const adminEmail = String(process.env.ADMIN_EMAIL);
-    const adminPassword = generatePassword();
+    const seedAdmins = String(process.env.SEED_ADMINS);
 
-    // const allRoles = await strapi.db.query("admin::role").findMany();
-    // console.log(allRoles);
+    if (seedAdmins == "undefined" || seedAdmins == "") return;
 
-    if (!adminEmail) return;
+    seedAdmins.split(",").forEach(async (email) => {
+      const adminPassword = generatePassword();
 
-    const superAdminRole = await strapi.db
-      .query("admin::role")
-      .findOne({ where: { code: "strapi-super-admin" } });
+      const superAdminRole = await strapi.db
+        .query("admin::role")
+        .findOne({ where: { code: "strapi-super-admin" } });
 
-    const superAdmin = await strapi.db
-      .query("admin::user")
-      .findOne({ where: { username: adminEmail } });
+      const superAdmin = await strapi.db
+        .query("admin::user")
+        .findOne({ where: { email: email } });
 
-    if (!superAdmin) {
-      const params = {
-        username: adminEmail,
-        email: adminEmail,
-        password: await strapi.admin.services.auth.hashPassword(adminPassword),
-        blocked: false,
-        isActive: true,
-        confirmed: true,
-        roles: [superAdminRole],
-      };
+      if (!superAdmin) {
+        const params = {
+          username: email,
+          email: email,
+          password: await strapi.admin.services.auth.hashPassword(
+            adminPassword
+          ),
+          blocked: false,
+          isActive: true,
+          confirmed: true,
+          roles: [superAdminRole],
+        };
 
-      await strapi.db.query("admin::user").create({
-        data: { ...params },
-        populate: ["roles"],
-      });
+        await strapi.db.query("admin::user").create({
+          data: { ...params },
+          populate: ["roles"],
+        });
 
-      console.log(
-        `First admin account created for ${adminEmail} with temporary password: ${adminPassword}. Please update the password after logging in`
-      );
-    }
+        console.log(
+          `\nAdmin account created for ${email} with temporary password: ${adminPassword}. Please update the password after logging in`
+        );
+      }
+    });
   },
 };
