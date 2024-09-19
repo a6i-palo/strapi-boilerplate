@@ -67,7 +67,8 @@
         "fields": [
           "uuid",
           "questionSet",
-          "title"
+          "title",
+          "events"
         ]
       },
       "conditions": []
@@ -94,7 +95,8 @@
         "fields": [
           "uuid",
           "questionSet",
-          "title"
+          "title",
+          "events"
         ]
       },
       "conditions": []
@@ -107,7 +109,8 @@
         "fields": [
           "uuid",
           "questionSet",
-          "title"
+          "title",
+          "events"
         ]
       },
       "conditions": []

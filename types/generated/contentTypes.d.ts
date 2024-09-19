@@ -992,6 +992,9 @@ export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
       ]
     >;
     title: Attribute.String & Attribute.Required;
+    events: Attribute.DynamicZone<
+      ['question.event-code-string', 'question.event-code-select']
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -1,12 +1,12 @@
 {
-  "key": "plugin_content_manager_configuration_components::question.event",
+  "key": "plugin_content_manager_configuration_components::question.event-code-select",
   "value": {
     "settings": {
       "bulkable": true,
       "filterable": true,
       "searchable": true,
       "pageSize": 10,
-      "mainField": "description",
+      "mainField": "id",
       "defaultSortBy": "id",
       "defaultSortOrder": "ASC"
     },
@@ -17,20 +17,6 @@
           "label": "id",
           "searchable": false,
           "sortable": false
-        }
-      },
-      "description": {
-        "edit": {
-          "label": "description",
-          "description": "",
-          "placeholder": "",
-          "visible": true,
-          "editable": true
-        },
-        "list": {
-          "label": "description",
-          "searchable": true,
-          "sortable": true
         }
       },
       "eventCode": {
@@ -51,15 +37,10 @@
     "layouts": {
       "list": [
         "id",
-        "description",
         "eventCode"
       ],
       "edit": [
         [
-          {
-            "name": "description",
-            "size": 6
-          },
           {
             "name": "eventCode",
             "size": 6
@@ -67,7 +48,7 @@
         ]
       ]
     },
-    "uid": "question.event",
+    "uid": "question.event-code-select",
     "isComponent": true
   },
   "type": "object",

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_question_event_code_selects",
+  "info": {
+    "displayName": "Event Code Select",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "eventCode": {
+      "type": "enumeration",
+      "enum": ["LOGIN", "LOGOUT", "EMEDICAL_CARD_DOWNLOAD"],
+      "required": true
+    }
+  }
+}

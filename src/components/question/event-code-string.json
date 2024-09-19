@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_question_event_code_strings",
+  "info": {
+    "displayName": "Event Code String"
+  },
+  "options": {},
+  "attributes": {
+    "eventCode": {
+      "type": "string"
+    }
+  }
+}

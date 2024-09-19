@@ -32,6 +32,13 @@
     "title": {
       "type": "string",
       "required": true
+    },
+    "events": {
+      "type": "dynamiczone",
+      "components": [
+        "question.event-code-string",
+        "question.event-code-select"
+      ]
     }
   }
 }
