@@ -14,18 +14,22 @@ export default {
         artifactoryUsername,
         artifactoryPassword,
         artifactoryDestination,
+        packageVersion,
+        packageName,
       } = ctx.request.body;
 
       const timestamp = Date.now();
 
       const savefolder = path.join(__dirname, "..", "..", "..", "backup");
 
+      const filename = `${packageName}-${timestamp}-${packageVersion}`;
+
       if (!fs.existsSync(savefolder)) {
         fs.mkdirSync(savefolder);
       }
 
       execSync(
-        `npx strapi export --no-encrypt --file ${savefolder}/${timestamp}`
+        `npx strapi export --no-encrypt --file ${savefolder}/${filename}`
       );
 
       await BackupServices.uploadFileToArtifactory(
@@ -34,7 +38,7 @@ export default {
         artifactoryPassword,
         artifactoryDestination,
         savefolder,
-        `${timestamp}.tar.gz`
+        `${filename}.tar.gz`
       );
 
       ctx.status = 204;

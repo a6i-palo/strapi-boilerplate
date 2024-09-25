@@ -27,13 +27,13 @@ export default ({ env }) => ({
           return new Strategy(
             samlConfig,
             async (profile: any, done: VerifiedCallback) => {
-              const editorRole = await strapi.db
-                .query("admin::role")
-                .findOne({ where: { name: "Editor" } });
-              console.log(editorRole);
+              // const editorRole = await strapi.db
+              //   .query("admin::role")
+              //   .findOne({ where: { name: "Editor" } });
+              // console.log(editorRole);
 
-              const users = await strapi.db.query("admin::user").findMany();
-              console.log(users);
+              // const users = await strapi.db.query("admin::user").findMany();
+              // console.log(users);
 
               done(null, {
                 username:

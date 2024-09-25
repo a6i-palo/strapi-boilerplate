@@ -39,7 +39,7 @@
       "name": "question_sets_strapi_stage_links",
       "dependsOn": [
         {
-          "name": "question_sets"
+          "name": "question-sets"
         }
       ]
     }

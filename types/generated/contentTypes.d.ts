@@ -902,6 +902,11 @@ export interface ApiContentBundleContentBundle extends Schema.CollectionType {
     reviewWorkflows: false;
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
     content: Attribute.DynamicZone<
       [
@@ -910,9 +915,26 @@ export interface ApiContentBundleContentBundle extends Schema.CollectionType {
         'category.image-snippet'
       ]
     > &
-      Attribute.Required;
-    title: Attribute.String & Attribute.Required;
-    ticket: Attribute.String & Attribute.Required;
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    ticket: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     uuid: Attribute.UID<
       undefined,
       undefined,
@@ -943,6 +965,12 @@ export interface ApiContentBundleContentBundle extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::content-bundle.content-bundle',
+      'oneToMany',
+      'api::content-bundle.content-bundle'
+    >;
+    locale: Attribute.String;
     strapi_stage: Attribute.Relation<
       'api::content-bundle.content-bundle',
       'oneToOne',
@@ -957,7 +985,7 @@ export interface ApiContentBundleContentBundle extends Schema.CollectionType {
 }
 
 export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
-  collectionName: 'question_sets';
+  collectionName: 'question-sets';
   info: {
     singularName: 'question-set';
     pluralName: 'question-sets';
@@ -965,7 +993,13 @@ export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
     description: '';
   };
   options: {
+    reviewWorkflows: false;
     draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     uuid: Attribute.UID<
@@ -990,11 +1024,27 @@ export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
         'question.free-text-question',
         'question.nested-numeric-selection-question'
       ]
-    >;
-    title: Attribute.String & Attribute.Required;
+    > &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     events: Attribute.DynamicZone<
       ['question.event-code-string', 'question.event-code-select']
-    >;
+    > &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1010,6 +1060,12 @@ export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::question-set.question-set',
+      'oneToMany',
+      'api::question-set.question-set'
+    >;
+    locale: Attribute.String;
     strapi_stage: Attribute.Relation<
       'api::question-set.question-set',
       'oneToOne',

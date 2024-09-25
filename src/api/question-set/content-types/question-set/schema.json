@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "question_sets",
+  "collectionName": "question-sets",
   "info": {
     "singularName": "question-set",
     "pluralName": "question-sets",
@@ -8,9 +8,14 @@
     "description": ""
   },
   "options": {
+    "reviewWorkflows": false,
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "uuid": {
       "type": "customField",
@@ -27,18 +32,33 @@
         "question.numeric-selection-question",
         "question.free-text-question",
         "question.nested-numeric-selection-question"
-      ]
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "events": {
       "type": "dynamiczone",
       "components": [
         "question.event-code-string",
         "question.event-code-select"
-      ]
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
