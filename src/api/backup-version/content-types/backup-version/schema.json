@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "backup_versions",
+  "info": {
+    "singularName": "backup-version",
+    "pluralName": "backup-versions",
+    "displayName": "Backup Version"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "current": {
+      "type": "integer"
+    }
+  }
+}

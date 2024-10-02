@@ -16,6 +16,9 @@ export default {
         artifactoryDestination,
         packageVersion,
         packageName,
+        packageType,
+        collection = null,
+        uuids = [],
       } = ctx.request.body;
 
       const timestamp = Date.now();
@@ -28,19 +31,39 @@ export default {
         fs.mkdirSync(savefolder);
       }
 
-      execSync(
-        `npx strapi export --no-encrypt --file ${savefolder}/${filename}`
-      );
+      if (packageType === "snapshot") {
+        execSync(
+          `npx strapi export --no-encrypt --file ${savefolder}/${filename}`
+        );
 
-      await BackupServices.uploadFileToArtifactory(
-        artifactoryUrl,
-        artifactoryUsername,
-        artifactoryPassword,
-        artifactoryDestination,
-        savefolder,
-        `${filename}.tar.gz`
-      );
+        await BackupServices.uploadFileToArtifactory(
+          artifactoryUrl,
+          artifactoryUsername,
+          artifactoryPassword,
+          artifactoryDestination,
+          savefolder,
+          `${filename}.tar.gz`
+        );
+      }
 
+      if (packageType === "backup" && collection) {
+        const tarfile = await BackupServices.backupCollection(
+          collection,
+          `${savefolder}/${timestamp}`,
+          filename,
+          uuids,
+          packageVersion
+        );
+
+        await BackupServices.uploadFileToArtifactory(
+          artifactoryUrl,
+          artifactoryUsername,
+          artifactoryPassword,
+          artifactoryDestination,
+          `${savefolder}/${timestamp}`,
+          tarfile
+        );
+      }
       ctx.status = 204;
     } catch (err) {
       console.log(err);
@@ -52,13 +75,19 @@ export default {
     try {
       const {
         artifactoryUrl,
-        filename,
-        artifactoryDestination,
         artifactoryUsername,
         artifactoryPassword,
+        artifactoryDestination,
+        packageType,
+        collection = null,
+        filename,
       } = ctx.request.body;
 
       const savefolder = path.join(__dirname, "..", "..", "..", "backup");
+
+      if (!fs.existsSync(savefolder)) {
+        fs.mkdirSync(savefolder);
+      }
 
       BackupServices.downloadFileFromArtifactory(
         artifactoryUrl,
@@ -69,7 +98,19 @@ export default {
         filename
       );
 
-      execSync(`npx strapi import --file backup/${filename} --force`);
+      if (packageType === "snapshot") {
+        execSync(`npx strapi import --file backup/${filename} --force`);
+      }
+
+      if (packageType === "backup" && collection) {
+        await strapi.db.transaction(async () => {
+          await BackupServices.importCollection(
+            collection,
+            savefolder,
+            filename
+          );
+        });
+      }
 
       ctx.status = 204;
     } catch (err) {

@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "question-sets",
+  "collectionName": "question_sets",
   "info": {
     "singularName": "question-set",
     "pluralName": "question-sets",

@@ -890,6 +890,46 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiBackupVersionBackupVersion extends Schema.CollectionType {
+  collectionName: 'backup_versions';
+  info: {
+    singularName: 'backup-version';
+    pluralName: 'backup-versions';
+    displayName: 'Backup Version';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    current: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    strapi_stage: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::workflow-stage'
+    >;
+    strapi_assignee: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::user'
+    >;
+  };
+}
+
 export interface ApiContentBundleContentBundle extends Schema.CollectionType {
   collectionName: 'content-bundle';
   info: {
@@ -985,7 +1025,7 @@ export interface ApiContentBundleContentBundle extends Schema.CollectionType {
 }
 
 export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
-  collectionName: 'question-sets';
+  collectionName: 'question_sets';
   info: {
     singularName: 'question-set';
     pluralName: 'question-sets';
@@ -1140,6 +1180,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::backup-version.backup-version': ApiBackupVersionBackupVersion;
       'api::content-bundle.content-bundle': ApiContentBundleContentBundle;
       'api::question-set.question-set': ApiQuestionSetQuestionSet;
       'admin::audit-log': AdminAuditLog;
