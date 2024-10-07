@@ -46,6 +46,34 @@ export const getPodImage = async (): Promise<string> => {
   }
 };
 
+// Traverse the data to collect referenced file IDs resursively
+export const collectReferencedFileIds = (obj, referencedFileIds) => {
+  for (const key in obj) {
+    if (obj[key] && typeof obj[key] === "object") {
+      if (obj[key].id && obj[key].mime && obj[key].url) {
+        referencedFileIds.add(obj[key].id);
+      } else {
+        collectReferencedFileIds(obj[key], referencedFileIds);
+      }
+    }
+  }
+};
+
+// Traverse the data to remove component IDs recursively
+export const removeComponentIds = (obj) => {
+  if (Array.isArray(obj)) {
+    obj.forEach(removeComponentIds);
+  } else if (obj && typeof obj === "object") {
+    for (const key in obj) {
+      if (key === "id" && obj.__component) {
+        delete obj[key];
+      } else {
+        removeComponentIds(obj[key]);
+      }
+    }
+  }
+};
+
 // Function to traverse the data and collect media files
 export const traverse = (obj, mediaFiles) => {
   for (const key in obj) {
@@ -90,15 +118,20 @@ export const generateImageVersions = async (filePath, uploadDir) => {
 const entityServiceParams = {
   "content-bundle": {
     populate: {
+      localizations: true,
       content: {
         populate: {
           singleImage: true,
         },
       },
     },
+    locale: "all",
+    maxLimit: -1,
   },
   "question-sets": {
     populate: true,
+    locale: "all",
+    maxLimit: -1,
   },
 };
 
@@ -111,4 +144,29 @@ export const getCollectionSearchParams = (collectionName, uuids) => {
     }) ||
     entityServiceParams[collectionName]
   );
+};
+
+// Function to create of update an entity
+export const upsertEntity = async (item, contentType) => {
+  const existingEntity = await strapi.entityService.findMany(contentType, {
+    filters: { uuid: item.uuid },
+    limit: 1,
+    locale: "all",
+  });
+
+  // delete before creation if existing entity found
+  if (existingEntity.length > 0) {
+    await strapi.entityService.update(contentType, existingEntity[0].id, {
+      data: item,
+    });
+
+    return existingEntity[0].id;
+  } else {
+    const newEntity = await strapi.entityService.create(contentType, {
+      data: item,
+      populate: ["localizations"],
+    });
+
+    return newEntity.id;
+  }
 };

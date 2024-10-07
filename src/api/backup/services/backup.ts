@@ -10,6 +10,9 @@ import {
   traverse,
   generateImageVersions,
   getCollectionSearchParams,
+  collectReferencedFileIds,
+  removeComponentIds,
+  upsertEntity,
 } from "./utils";
 
 export default {
@@ -103,20 +106,11 @@ export default {
 
     const referencedFileIds = new Set();
 
-    // Traverse the data to collect referenced file IDs
-    const collectReferencedFileIds = (obj) => {
-      for (const key in obj) {
-        if (obj[key] && typeof obj[key] === "object") {
-          if (obj[key].id && obj[key].mime && obj[key].url) {
-            referencedFileIds.add(obj[key].id);
-          } else {
-            collectReferencedFileIds(obj[key]);
-          }
-        }
-      }
-    };
+    backupTree.data.forEach((item) =>
+      collectReferencedFileIds(item, referencedFileIds)
+    );
 
-    backupTree.data.forEach((item) => collectReferencedFileIds(item));
+    backupTree.data.forEach((item) => removeComponentIds(item));
 
     // Filter files to include only those that are referenced
     backupTree.files = (
@@ -282,11 +276,6 @@ export default {
     // Import data into the collection
     const contentType: any = `api::${collectionName}.${collectionName}`;
     for (const item of backupTree.data) {
-      const existingEntity = await strapi.entityService.findMany(contentType, {
-        filters: { uuid: item.uuid },
-        limit: 1,
-      });
-
       // Ensure all related files exist before creating/updating the entity
       // Update imported item file id with file ID from database
       // This code block only works for content-bundle collection with the singleImage component
@@ -309,13 +298,40 @@ export default {
         }
       }
 
-      // delete before creation if existing entity found
-      if (existingEntity.length > 0) {
-        await strapi.entityService.delete(contentType, existingEntity[0].id);
+      // Ensure localisation relation exists before creating/updating the entity
+      // Check if item exist in data for given localisation uuid
+      if (item.localizations) {
+        for (let i = 0; i < item.localizations.length; i++) {
+          const localization = item.localizations[i];
+          const bundledLocaleEntry = backupTree.data.find(
+            (item) => item.uuid === localization.uuid
+          );
+          if (bundledLocaleEntry) {
+            localization.id = await upsertEntity(
+              bundledLocaleEntry,
+              contentType
+            );
+          } else {
+            // If the localisation is not found in the backup data, find it in the database
+            const existingEntity = await strapi.entityService.findMany(
+              contentType,
+              {
+                filters: { uuid: localization.uuid },
+                limit: 1,
+                locale: "all",
+              }
+            );
+
+            // Remove localization from localizations if locale entry is not found
+            // in both backup package and database
+            if (!existingEntity.length) {
+              item.localizations.splice(i, 1);
+            }
+          }
+        }
       }
-      await strapi.entityService.create(contentType, {
-        data: item,
-      });
+
+      await upsertEntity(item, contentType);
     }
 
     // Create a new backup version entry if it doesn't exist, else update the existing entry
@@ -340,5 +356,8 @@ export default {
     }
 
     console.log(`Collection imported successfully from ${tarballPath}`);
+
+    // Clean up the extracted files
+    fs.rmSync(extractPath, { recursive: true });
   },
 };
