@@ -91,6 +91,7 @@ export default {
         collection: collectionName,
         timestamp: new Date().toISOString(),
         image: await getPodImage(),
+        entries: [],
       },
       data: null,
       files: null,
@@ -106,9 +107,10 @@ export default {
 
     const referencedFileIds = new Set();
 
-    backupTree.data.forEach((item) =>
-      collectReferencedFileIds(item, referencedFileIds)
-    );
+    backupTree.data.forEach((item) => {
+      collectReferencedFileIds(item, referencedFileIds);
+      backupTree.manifest.entries.push(item.uuid);
+    });
 
     backupTree.data.forEach((item) => removeComponentIds(item));
 
