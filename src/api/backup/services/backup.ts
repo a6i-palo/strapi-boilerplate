@@ -8,7 +8,6 @@ import tar from "tar";
 import {
   getPodImage,
   traverse,
-  generateImageVersions,
   getCollectionSearchParams,
   collectReferencedFileIds,
   removeComponentIds,
@@ -133,6 +132,12 @@ export default {
       await strapi.db.query(`plugin::upload.folder`).findMany()
     ).filter((folder) => referencedFolderPaths.has(folder.path));
 
+    const existingFolders = await strapi.plugins[
+      "upload"
+    ].services.folder.getStructure();
+
+    console.log(JSON.stringify(existingFolders, null, 2));
+
     // Save the collection JSON to disk
     fs.writeFileSync(
       path.join(savefolder, `${collectionName}.json`),
@@ -207,10 +212,14 @@ export default {
         limit: 1,
       }
     );
+
     const currentBackupVersion = backupVersions[0];
 
     // Validate manifest
-    if (currentBackupVersion.current > backupTree.manifest.version) {
+    if (
+      currentBackupVersion &&
+      currentBackupVersion.current > backupTree.manifest.version
+    ) {
       throw new Error("Backup version is older than the current version");
     }
 
@@ -228,17 +237,29 @@ export default {
           where: { pathId: folder.pathId },
         });
 
+      let folderId = existingFolder?.id;
+
       if (!existingFolder) {
         const { id, ...folderData } = folder;
-        await strapi.db.query(`plugin::upload.folder`).create({
-          data: folderData,
-        });
+
+        const createdFolder = await strapi.plugins[
+          "upload"
+        ].services.folder.create(folderData);
+
+        folderId = createdFolder.id;
       } else {
         // Update the folder path in files
         for (let i = 0; i < backupTree.files.length; i++) {
           if (backupTree.files[i].folderPath === folder.path) {
             backupTree.files[i].folderPath = existingFolder.path;
           }
+        }
+      }
+
+      // Update the folder id in backupTree.folders
+      for (let i = 0; i < backupTree.folders.length; i++) {
+        if (backupTree.folders[i].pathId === folder.pathId) {
+          backupTree.folders[i].id = folderId;
         }
       }
     }
@@ -249,17 +270,6 @@ export default {
       fs.mkdirSync(uploadDir);
     }
 
-    const mediaFiles = fs.readdirSync(extractPath).filter((file) => {
-      return file !== `${collectionName}.json`;
-    });
-
-    for (const file of mediaFiles) {
-      const filePath = path.join(extractPath, file);
-      const destPath = path.join(uploadDir, file);
-      fs.copyFileSync(filePath, destPath);
-      await generateImageVersions(destPath, uploadDir);
-    }
-
     // Import files
     for (const file of backupTree.files) {
       const existingFile = await strapi.db
@@ -267,11 +277,71 @@ export default {
         .findOne({
           where: { hash: file.hash },
         });
+      const filePath = path.join(extractPath, `${file.hash}${file.ext}`);
+      const fileStats = fs.statSync(filePath);
 
-      if (!existingFile) {
-        await strapi.db.query(`plugin::upload.file`).create({
-          data: file,
+      // Set folderId in file object
+      for (let i = 0; i < backupTree.folders.length; i++) {
+        if (backupTree.folders[i].path === file.folderPath) {
+          file.folderId = backupTree.folders[i].id;
+        }
+      }
+
+      if (existingFile) {
+        await strapi.plugins["upload"].services.upload.replace(
+          existingFile.id,
+          {
+            data: {
+              fileInfo: {
+                alternativeText: file.alternativeText,
+                caption: file.caption,
+                name: file.name,
+                folder: file.folderId,
+              },
+            },
+            file: {
+              path: filePath,
+              name: file.name,
+              type: file.mime,
+              size: fileStats.size,
+              hash: file.hash,
+            },
+          }
+        );
+      } else {
+        const uploadedFile = await strapi.plugins[
+          "upload"
+        ].services.upload.upload({
+          data: {
+            fileInfo: {
+              alternativeText: file.alternativeText,
+              caption: file.caption,
+              name: file.name,
+              folder: file.folderId,
+            },
+          },
+          files: {
+            path: filePath,
+            name: file.name,
+            type: file.mime,
+            size: fileStats.size,
+            hash: file.hash,
+          },
         });
+        // Find content object with same hash and update the file id in backupTree.data
+        // This code block only works for content-bundle collection with the singleImage component
+        for (const item of backupTree.data) {
+          if (item.content && Array.isArray(item.content)) {
+            item.content.forEach((contentItem) => {
+              if (
+                contentItem.singleImage &&
+                contentItem.singleImage.hash === file.hash
+              ) {
+                contentItem.singleImage.id = uploadedFile[0].id;
+              }
+            });
+          }
+        }
       }
     }
 

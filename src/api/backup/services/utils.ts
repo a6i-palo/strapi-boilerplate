@@ -94,15 +94,6 @@ export const traverse = (obj, mediaFiles) => {
   }
 };
 
-// Function to generate image versions
-export const generateImageVersions = async (filePath, uploadDir) => {
-  const sizes = {
-    thumbnail: 150,
-    small: 300,
-    medium: 600,
-    large: 1200,
-  };
-
   const fileName = path.basename(filePath, path.extname(filePath));
   const fileExt = path.extname(filePath);
 
@@ -140,7 +131,7 @@ export const getCollectionSearchParams = (collectionName, uuids) => {
   return (
     (uuids.length > 0 && {
       ...entityServiceParams[collectionName],
-      filters: { uuid: { $in: uuids } },
+      filters: { uuid: { $in: uuids.replace(/ /g, "").split(",") } },
     }) ||
     entityServiceParams[collectionName]
   );

@@ -18,14 +18,16 @@ export default {
         packageName,
         packageType,
         collection = null,
-        uuids = [],
+        uuids = "",
       } = ctx.request.body;
 
       const timestamp = Date.now();
 
       const savefolder = path.join(__dirname, "..", "..", "..", "backup");
 
-      const filename = `${packageName}-${timestamp}-${packageVersion}`;
+      // const filename = `${packageName}-${timestamp}-${packageVersion}`;
+
+      const filename = `${packageName}-${packageVersion}`;
 
       if (!fs.existsSync(savefolder)) {
         fs.mkdirSync(savefolder);
@@ -49,7 +51,8 @@ export default {
       if (packageType === "backup" && collection) {
         const tarfile = await BackupServices.backupCollection(
           collection,
-          `${savefolder}/${timestamp}`,
+          // `${savefolder}/${timestamp}`,
+          savefolder,
           filename,
           uuids,
           packageVersion
@@ -89,17 +92,17 @@ export default {
         fs.mkdirSync(savefolder);
       }
 
-      BackupServices.downloadFileFromArtifactory(
-        artifactoryUrl,
-        artifactoryUsername,
-        artifactoryPassword,
-        artifactoryDestination,
-        savefolder,
-        filename
-      );
+      // await BackupServices.downloadFileFromArtifactory(
+      //   artifactoryUrl,
+      //   artifactoryUsername,
+      //   artifactoryPassword,
+      //   artifactoryDestination,
+      //   savefolder,
+      //   filename
+      // );
 
       if (packageType === "snapshot") {
-        execSync(`npx strapi import --file backup/${filename} --force`);
+        execSync(`npx strapi import --file ${savefolder}/${filename} --force`);
       }
 
       if (packageType === "backup" && collection) {
@@ -114,6 +117,7 @@ export default {
 
       ctx.status = 204;
     } catch (err) {
+      console.log(err);
       ctx.status = err.status || 500;
       ctx.body = { error: err.message };
     }
