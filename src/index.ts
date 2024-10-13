@@ -16,7 +16,12 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register({ strapi }) {
+    strapi
+      .plugin("documentation")
+      .service("override")
+      .excludeFromGeneration(["backup-version"]);
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
