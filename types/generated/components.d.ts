@@ -97,7 +97,15 @@ export interface QuestionEventCodeSelect extends Schema.Component {
   };
   attributes: {
     eventCode: Attribute.Enumeration<
-      ['LOGIN', 'LOGOUT', 'EMEDICAL_CARD_DOWNLOAD']
+      [
+        'LOGIN',
+        'LOGOUT',
+        'DOWNLOAD_EMEDICAL_CARD',
+        'COMPLETE_FUND_SWITCH',
+        'COMPLETE_PREMIUM_REDIRECTION',
+        'COMPLETE_PARTIAL_WITHDRAWAL',
+        'COMPLETE_PORTFOLIO_REBALANCING'
+      ]
     > &
       Attribute.Required;
   };

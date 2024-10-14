@@ -8,7 +8,15 @@
   "attributes": {
     "eventCode": {
       "type": "enumeration",
-      "enum": ["LOGIN", "LOGOUT", "EMEDICAL_CARD_DOWNLOAD"],
+      "enum": [
+        "LOGIN",
+        "LOGOUT",
+        "DOWNLOAD_EMEDICAL_CARD",
+        "COMPLETE_FUND_SWITCH",
+        "COMPLETE_PREMIUM_REDIRECTION",
+        "COMPLETE_PARTIAL_WITHDRAWAL",
+        "COMPLETE_PORTFOLIO_REBALANCING"
+      ],
       "required": true
     }
   }
