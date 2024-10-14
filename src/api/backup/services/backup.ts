@@ -106,6 +106,10 @@ export default {
 
     const referencedFileIds = new Set();
 
+    if (backupTree.data.length === 0) {
+      throw new Error("Collection is empty, nothing to backup");
+    }
+
     backupTree.data.forEach((item) => {
       collectReferencedFileIds(item, referencedFileIds);
       backupTree.manifest.entries.push(item.uuid);
@@ -131,12 +135,6 @@ export default {
     backupTree.folders = (
       await strapi.db.query(`plugin::upload.folder`).findMany()
     ).filter((folder) => referencedFolderPaths.has(folder.path));
-
-    const existingFolders = await strapi.plugins[
-      "upload"
-    ].services.folder.getStructure();
-
-    console.log(JSON.stringify(existingFolders, null, 2));
 
     // Save the collection JSON to disk
     fs.writeFileSync(
@@ -226,7 +224,7 @@ export default {
     const podImage = await getPodImage();
 
     if (podImage !== backupTree.manifest.image) {
-      console.warn("The backup was created from an pod image");
+      console.warn("The backup was created from another pod image");
     }
 
     // Import folders
@@ -248,10 +246,11 @@ export default {
 
         folderId = createdFolder.id;
       } else {
-        // Update the folder path in files
+        // Update the folder path and folder id in files
         for (let i = 0; i < backupTree.files.length; i++) {
           if (backupTree.files[i].folderPath === folder.path) {
             backupTree.files[i].folderPath = existingFolder.path;
+            backupTree.files[i].folderId = existingFolder.id;
           }
         }
       }
@@ -280,54 +279,41 @@ export default {
       const filePath = path.join(extractPath, `${file.hash}${file.ext}`);
       const fileStats = fs.statSync(filePath);
 
-      // Set folderId in file object
-      for (let i = 0; i < backupTree.folders.length; i++) {
-        if (backupTree.folders[i].path === file.folderPath) {
-          file.folderId = backupTree.folders[i].id;
-        }
-      }
+      const fileData = {
+        fileInfo: {
+          alternativeText: file.alternativeText,
+          caption: file.caption,
+          name: file.name,
+          folder: file.folderId,
+        },
+      };
+
+      const fileObj = {
+        path: filePath,
+        name: file.name,
+        type: file.mime,
+        size: fileStats.size,
+        hash: file.hash,
+        folder: file.folderId,
+        folderPath: file.folderPath,
+      };
 
       if (existingFile) {
         await strapi.plugins["upload"].services.upload.replace(
           existingFile.id,
           {
-            data: {
-              fileInfo: {
-                alternativeText: file.alternativeText,
-                caption: file.caption,
-                name: file.name,
-                folder: file.folderId,
-              },
-            },
-            file: {
-              path: filePath,
-              name: file.name,
-              type: file.mime,
-              size: fileStats.size,
-              hash: file.hash,
-            },
+            data: fileData,
+            file: fileObj,
           }
         );
       } else {
         const uploadedFile = await strapi.plugins[
           "upload"
         ].services.upload.upload({
-          data: {
-            fileInfo: {
-              alternativeText: file.alternativeText,
-              caption: file.caption,
-              name: file.name,
-              folder: file.folderId,
-            },
-          },
-          files: {
-            path: filePath,
-            name: file.name,
-            type: file.mime,
-            size: fileStats.size,
-            hash: file.hash,
-          },
+          data: fileData,
+          files: fileObj,
         });
+
         // Find content object with same hash and update the file id in backupTree.data
         // This code block only works for content-bundle collection with the singleImage component
         for (const item of backupTree.data) {
@@ -347,6 +333,7 @@ export default {
 
     // Import data into the collection
     const contentType: any = `api::${collectionName}.${collectionName}`;
+
     for (const item of backupTree.data) {
       // Ensure all related files exist before creating/updating the entity
       // Update imported item file id with file ID from database
