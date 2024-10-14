@@ -94,18 +94,6 @@ export const traverse = (obj, mediaFiles) => {
   }
 };
 
-  const fileName = path.basename(filePath, path.extname(filePath));
-  const fileExt = path.extname(filePath);
-
-  for (const [sizeName, size] of Object.entries(sizes)) {
-    const outputFilePath = path.join(
-      uploadDir,
-      `${sizeName}_${fileName}${fileExt}`
-    );
-    await sharp(filePath).resize(size).toFile(outputFilePath);
-  }
-};
-
 const entityServiceParams = {
   "content-bundle": {
     populate: {
