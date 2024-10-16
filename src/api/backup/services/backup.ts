@@ -236,6 +236,7 @@ export default {
         });
 
       let folderId = existingFolder?.id;
+      let folderPath = existingFolder?.path;
 
       if (!existingFolder) {
         const { id, ...folderData } = folder;
@@ -245,28 +246,15 @@ export default {
         ].services.folder.create(folderData);
 
         folderId = createdFolder.id;
-      } else {
-        // Update the folder path and folder id in files
-        for (let i = 0; i < backupTree.files.length; i++) {
-          if (backupTree.files[i].folderPath === folder.path) {
-            backupTree.files[i].folderPath = existingFolder.path;
-            backupTree.files[i].folderId = existingFolder.id;
-          }
+        folderPath = createdFolder.path;
+      }
+      // Update the folder path and folder id in files
+      for (let i = 0; i < backupTree.files.length; i++) {
+        if (backupTree.files[i].folderPath === folder.path) {
+          backupTree.files[i].folderPath = folderPath;
+          backupTree.files[i].folderId = folderId;
         }
       }
-
-      // Update the folder id in backupTree.folders
-      for (let i = 0; i < backupTree.folders.length; i++) {
-        if (backupTree.folders[i].pathId === folder.pathId) {
-          backupTree.folders[i].id = folderId;
-        }
-      }
-    }
-
-    // Copy media files to the upload directory and generate versions
-    const uploadDir = path.join(strapi.dirs.static.public, "uploads");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir);
     }
 
     // Import files

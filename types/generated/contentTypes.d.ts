@@ -454,6 +454,235 @@ export interface AdminWorkflowStage extends Schema.CollectionType {
   };
 }
 
+export interface ApiBackupVersionBackupVersion extends Schema.CollectionType {
+  collectionName: 'backup_versions';
+  info: {
+    singularName: 'backup-version';
+    pluralName: 'backup-versions';
+    displayName: 'Backup Version';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    current: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    strapi_stage: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::workflow-stage'
+    >;
+    strapi_assignee: Attribute.Relation<
+      'api::backup-version.backup-version',
+      'oneToOne',
+      'admin::user'
+    >;
+  };
+}
+
+export interface ApiContentBundleContentBundle extends Schema.CollectionType {
+  collectionName: 'content-bundle';
+  info: {
+    singularName: 'content-bundle';
+    pluralName: 'content-bundles';
+    displayName: 'Content Bundle';
+    description: '';
+  };
+  options: {
+    reviewWorkflows: false;
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    content: Attribute.DynamicZone<
+      [
+        'category.text-snippet',
+        'category.long-text-snippet',
+        'category.image-snippet'
+      ]
+    > &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    ticket: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    uuid: Attribute.UID<
+      undefined,
+      undefined,
+      {
+        'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+        'disable-regenerate': true;
+      }
+    > &
+      Attribute.CustomField<
+        'plugin::strapi-advanced-uuid.uuid',
+        {
+          'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+          'disable-regenerate': true;
+        }
+      >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::content-bundle.content-bundle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::content-bundle.content-bundle',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::content-bundle.content-bundle',
+      'oneToMany',
+      'api::content-bundle.content-bundle'
+    >;
+    locale: Attribute.String;
+    strapi_stage: Attribute.Relation<
+      'api::content-bundle.content-bundle',
+      'oneToOne',
+      'admin::workflow-stage'
+    >;
+    strapi_assignee: Attribute.Relation<
+      'api::content-bundle.content-bundle',
+      'oneToOne',
+      'admin::user'
+    >;
+  };
+}
+
+export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
+  collectionName: 'question_sets';
+  info: {
+    singularName: 'question-set';
+    pluralName: 'question-sets';
+    displayName: 'Question Set';
+    description: '';
+  };
+  options: {
+    reviewWorkflows: false;
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    uuid: Attribute.UID<
+      undefined,
+      undefined,
+      {
+        'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+        'disable-regenerate': true;
+      }
+    > &
+      Attribute.CustomField<
+        'plugin::strapi-advanced-uuid.uuid',
+        {
+          'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+          'disable-regenerate': true;
+        }
+      >;
+    questionSet: Attribute.DynamicZone<
+      [
+        'question.question',
+        'question.numeric-selection-question',
+        'question.free-text-question',
+        'question.nested-numeric-selection-question'
+      ]
+    > &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    events: Attribute.DynamicZone<
+      ['question.event-code-string', 'question.event-code-select']
+    > &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question-set.question-set',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question-set.question-set',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::question-set.question-set',
+      'oneToMany',
+      'api::question-set.question-set'
+    >;
+    locale: Attribute.String;
+    strapi_stage: Attribute.Relation<
+      'api::question-set.question-set',
+      'oneToOne',
+      'admin::workflow-stage'
+    >;
+    strapi_assignee: Attribute.Relation<
+      'api::question-set.question-set',
+      'oneToOne',
+      'admin::user'
+    >;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -890,235 +1119,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiBackupVersionBackupVersion extends Schema.CollectionType {
-  collectionName: 'backup_versions';
-  info: {
-    singularName: 'backup-version';
-    pluralName: 'backup-versions';
-    displayName: 'Backup Version';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    current: Attribute.Integer;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::backup-version.backup-version',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::backup-version.backup-version',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    strapi_stage: Attribute.Relation<
-      'api::backup-version.backup-version',
-      'oneToOne',
-      'admin::workflow-stage'
-    >;
-    strapi_assignee: Attribute.Relation<
-      'api::backup-version.backup-version',
-      'oneToOne',
-      'admin::user'
-    >;
-  };
-}
-
-export interface ApiContentBundleContentBundle extends Schema.CollectionType {
-  collectionName: 'content-bundle';
-  info: {
-    singularName: 'content-bundle';
-    pluralName: 'content-bundles';
-    displayName: 'Content Bundle';
-    description: '';
-  };
-  options: {
-    reviewWorkflows: false;
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    content: Attribute.DynamicZone<
-      [
-        'category.text-snippet',
-        'category.long-text-snippet',
-        'category.image-snippet'
-      ]
-    > &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    title: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    ticket: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    uuid: Attribute.UID<
-      undefined,
-      undefined,
-      {
-        'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
-        'disable-regenerate': true;
-      }
-    > &
-      Attribute.CustomField<
-        'plugin::strapi-advanced-uuid.uuid',
-        {
-          'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
-          'disable-regenerate': true;
-        }
-      >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::content-bundle.content-bundle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::content-bundle.content-bundle',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::content-bundle.content-bundle',
-      'oneToMany',
-      'api::content-bundle.content-bundle'
-    >;
-    locale: Attribute.String;
-    strapi_stage: Attribute.Relation<
-      'api::content-bundle.content-bundle',
-      'oneToOne',
-      'admin::workflow-stage'
-    >;
-    strapi_assignee: Attribute.Relation<
-      'api::content-bundle.content-bundle',
-      'oneToOne',
-      'admin::user'
-    >;
-  };
-}
-
-export interface ApiQuestionSetQuestionSet extends Schema.CollectionType {
-  collectionName: 'question_sets';
-  info: {
-    singularName: 'question-set';
-    pluralName: 'question-sets';
-    displayName: 'Question Set';
-    description: '';
-  };
-  options: {
-    reviewWorkflows: false;
-    draftAndPublish: true;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    uuid: Attribute.UID<
-      undefined,
-      undefined,
-      {
-        'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
-        'disable-regenerate': true;
-      }
-    > &
-      Attribute.CustomField<
-        'plugin::strapi-advanced-uuid.uuid',
-        {
-          'uuid-format': '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
-          'disable-regenerate': true;
-        }
-      >;
-    questionSet: Attribute.DynamicZone<
-      [
-        'question.question',
-        'question.numeric-selection-question',
-        'question.free-text-question',
-        'question.nested-numeric-selection-question'
-      ]
-    > &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    title: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    events: Attribute.DynamicZone<
-      ['question.event-code-string', 'question.event-code-select']
-    > &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::question-set.question-set',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::question-set.question-set',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::question-set.question-set',
-      'oneToMany',
-      'api::question-set.question-set'
-    >;
-    locale: Attribute.String;
-    strapi_stage: Attribute.Relation<
-      'api::question-set.question-set',
-      'oneToOne',
-      'admin::workflow-stage'
-    >;
-    strapi_assignee: Attribute.Relation<
-      'api::question-set.question-set',
-      'oneToOne',
-      'admin::user'
-    >;
-  };
-}
-
 export interface AdminAuditLog extends Schema.CollectionType {
   collectionName: 'strapi_audit_logs';
   info: {
@@ -1172,6 +1172,9 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::workflow': AdminWorkflow;
       'admin::workflow-stage': AdminWorkflowStage;
+      'api::backup-version.backup-version': ApiBackupVersionBackupVersion;
+      'api::content-bundle.content-bundle': ApiContentBundleContentBundle;
+      'api::question-set.question-set': ApiQuestionSetQuestionSet;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -1180,9 +1183,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::backup-version.backup-version': ApiBackupVersionBackupVersion;
-      'api::content-bundle.content-bundle': ApiContentBundleContentBundle;
-      'api::question-set.question-set': ApiQuestionSetQuestionSet;
       'admin::audit-log': AdminAuditLog;
     }
   }
