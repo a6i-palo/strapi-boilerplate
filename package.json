@@ -39,7 +39,7 @@
     },
     "micromatch": "4.0.8",
     "cookie": "0.7.2",
-    "vite": "5.4.9"
+    "vite": "5.4.8"
   },
   "strapi": {
     "uuid": "74c88c1f-276c-46f3-be58-e343a6bba174"
