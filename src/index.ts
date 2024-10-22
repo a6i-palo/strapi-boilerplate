@@ -20,7 +20,7 @@ export default {
     strapi
       .plugin("documentation")
       .service("override")
-      .excludeFromGeneration(["backup-version"]);
+      .excludeFromGeneration(["backup-version", "content-bundle"]);
   },
 
   /**
@@ -68,6 +68,49 @@ export default {
           `\nAdmin account created for ${email} with temporary password: ${adminPassword}. Please update the password after logging in`
         );
       }
+    });
+
+    const defaultEvents = [
+      "entry.create",
+      "entry.update",
+      "entry.delete",
+      "entry.publish",
+      "entry.unpublish",
+      "media.create",
+      "media.update",
+      "media.delete",
+      "media-folder.create",
+      "media-folder.update",
+      "media-folder.delete",
+      "user.create",
+      "user.update",
+      "user.delete",
+      "admin.auth.success",
+      "admin.logout",
+      "content-type.create",
+      "content-type.update",
+      "content-type.delete",
+      "component.create",
+      "component.update",
+      "component.delete",
+      "role.create",
+      "role.update",
+      "role.delete",
+      "permission.create",
+      "permission.update",
+      "permission.delete",
+    ];
+
+    strapi.db.lifecycles.subscribe((event) => {
+      if (event.params?.data?.action) {
+        console.log("event: ", event.params?.data?.action);
+        console.log("payload: ", event.params?.data?.payload);
+        console.log("=============");
+      }
+
+      // afterCreate
+      // afterUpdate
+      // afterDelete
     });
   },
 };

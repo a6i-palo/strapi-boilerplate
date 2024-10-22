@@ -22,26 +22,48 @@ export default () => ({
         plugins: [],
         path: "/documentation",
         mutateDocumentation: (generatedDocumentationDraft) => {
-          const pathsToDelete = [
-            "/content-bundles/{id}",
-            "/content-bundles",
-            "/content-bundles/{id}/localizations",
-            "/question-sets/{id}",
-            "/question-sets",
-            "/question-sets/{id}/localizations",
+          const OMIT_PATHS = [
+            {
+              path: "/content-bundles/{id}",
+              methods: ["get", "post", "delete", "put"],
+            },
+            {
+              path: "/content-bundles",
+              methods: ["post", "delete", "put"],
+            },
+            {
+              path: "/content-bundles/{id}/localizations",
+              methods: ["post", "delete", "put"],
+            },
+            {
+              path: "/question-sets/{id}",
+              methods: ["get", "post", "delete", "put"],
+            },
+            {
+              path: "/question-sets",
+              methods: ["post", "delete", "put"],
+            },
+            {
+              path: "/question-sets/{id}/localizations",
+              methods: ["post", "delete", "put"],
+            },
           ];
 
-          const methodsToDelete = ["post", "delete", "put"];
+          OMIT_PATHS.forEach((item) => {
+            if (!generatedDocumentationDraft.paths[item.path]) return;
 
-          pathsToDelete.forEach((basePath) => {
-            methodsToDelete.forEach((method) => {
-              if (
-                generatedDocumentationDraft.paths[basePath] &&
-                generatedDocumentationDraft.paths[basePath][method]
-              ) {
-                delete generatedDocumentationDraft.paths[basePath][method];
+            item.methods.forEach((method) => {
+              if (generatedDocumentationDraft.paths[item.path][method]) {
+                delete generatedDocumentationDraft.paths[item.path][method];
               }
             });
+
+            if (
+              Object.keys(generatedDocumentationDraft.paths[item.path])
+                .length === 0
+            ) {
+              delete generatedDocumentationDraft.paths[item.path];
+            }
           });
         },
       },
